@@ -131,7 +131,9 @@ typedef void (^AuthCompletion)(NSError *error);
                      completion:(void (^)(NSError *error))completionHandler
 {
     if (!viewController) {
+#ifndef MS_APP_EXTENSIONS
         viewController = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
+#endif
     }
     
     NSURL *tokenURL = [NSURL URLWithString:self.tokenURL];

@@ -19,25 +19,22 @@ Pod::Spec.new do |s|
   s.source_files = "MSGraphSDKNXOAuth2/MSGraphSDKNXOAuth2.h"
   s.public_header_files = "MSGraphSDKNXOAuth2/MSGraphSDKNXOAuth2.h"
 
-  s.subspec 'Common' do |common|
-    common.source_files = "MSGraphSDKNXOAuth2/Common/*.{h,m}"
-    common.public_header_files = "MSGraphSDKNXOAuth2/Common/*.h"
+  s.default_subspec = 'Core'
+
+  s.subspec 'Core' do |core|
+    core.source_files = "MSGraphSDKNXOAuth2/Common/*.{h,m}", "MSGraphSDKNXOAuth2/Auth/*.{h,m}", "MSGraphSDKNXOAuth2/Extensions/*.{h,m}"
+    core.public_header_files = "MSGraphSDKNXOAuth2/Common/*.h", "MSGraphSDKNXOAuth2/Auth/*.h", "MSGraphSDKNXOAuth2/Extensions/*.h"
+    core.dependency 'NXOAuth2Client/Core', '~> 1.2.8'
+    core.dependency 'MSGraphSDK/Common'
+    core.dependency 'MSGraphSDK/Implementations'
   end
 
-  s.subspec 'Auth' do |auth|
-    auth.dependency 'MSGraphSDK-NXOAuth2Adapter/Common'
-    auth.dependency 'NXOAuth2Client', '~> 1.2.8'
-    auth.dependency 'MSGraphSDK/Common'
-    auth.dependency 'MSGraphSDK/Implementations'
-
-    auth.source_files = "MSGraphSDKNXOAuth2/Auth/*.{h,m}"
-    auth.public_header_files = "MSGraphSDKNXOAuth2/Auth/*.h"
-  end
-  
-  s.subspec 'Extensions' do |ext|
-    ext.dependency 'MSGraphSDK-NXOAuth2Adapter/Common'
-    
-    ext.source_files = "MSGraphSDKNXOAuth2/Extensions/*.{h,m}"
-    ext.public_header_files = "MSGraphSDKNXOAuth2/Extensions/*.h"
+  s.subspec 'AppExtension' do |ext|
+    ext.source_files = "MSGraphSDKNXOAuth2/Common/*.{h,m}", "MSGraphSDKNXOAuth2/Auth/*.{h,m}", "MSGraphSDKNXOAuth2/Extensions/*.{h,m}"
+    ext.public_header_files = "MSGraphSDKNXOAuth2/Common/*.h", "MSGraphSDKNXOAuth2/Auth/*.h", "MSGraphSDKNXOAuth2/Extensions/*.h"
+    ext.dependency 'NXOAuth2Client/AppExtension', '~> 1.2.8'
+    ext.dependency 'MSGraphSDK/Common'
+    ext.dependency 'MSGraphSDK/Implementations'
+    ext.pod_target_xcconfig = { 'GCC_PREPROCESSOR_DEFINITIONS' => 'MS_APP_EXTENSIONS=1' }
   end
 end
